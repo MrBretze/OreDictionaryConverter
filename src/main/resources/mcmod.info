@@ -5,7 +5,8 @@
   "version" : "1.10.0",
   "credits" : "",
   "authors": [
-    "EXTER"
+    "EXTER",
+    "MrBretzel"
   ],
   "description": "Convert between different versions of the same ore using the Forge Ore Dictionary",
   "url" : "https://github.com/EXTER7/OreDictionaryConverter",
