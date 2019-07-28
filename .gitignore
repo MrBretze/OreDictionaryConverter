@@ -17,4 +17,16 @@
 *.launch
 /*.txt
 
+## idea
+/.idea
 
+/out/
+/saves/
+config/
+
+crash-reports/
+
+logs/
+
+usercache.json
+usernamecache.json

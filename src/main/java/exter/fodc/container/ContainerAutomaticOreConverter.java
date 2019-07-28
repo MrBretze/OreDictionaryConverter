@@ -9,113 +9,112 @@ import net.minecraft.item.ItemStack;
 
 public class ContainerAutomaticOreConverter extends Container
 {
-  private TileEntityAutomaticOreConverter te_aoc;
+    // Slot numbers
+    private static final int SLOTS_INPUT = 0;
+    private static final int SLOTS_OUTPUT = 8;
+    private static final int SLOTS_INVENTORY = 14;
+    private static final int SLOTS_HOTBAR = 14 + 3 * 9;
+    private TileEntityAutomaticOreConverter te_aoc;
 
-  // Slot numbers
-  private static final int SLOTS_INPUT = 0;
-  private static final int SLOTS_OUTPUT = 8;
-  private static final int SLOTS_INVENTORY = 14;
-  private static final int SLOTS_HOTBAR = 14 + 3 * 9;
-
-  public ContainerAutomaticOreConverter(TileEntityAutomaticOreConverter aoc, EntityPlayer player)
-  {
-    te_aoc = aoc;
-    aoc.openInventory(player);
-    int i,j;
-
-    //Input
-    for(i = 0; i < 2; ++i)
+    public ContainerAutomaticOreConverter(TileEntityAutomaticOreConverter aoc, EntityPlayer player)
     {
-      for(j = 0; j < 4; ++j)
-      {
-        addSlotToContainer(new Slot(aoc, j + i * 4, 8 + j * 18, 25 + i * 18));
-      }
-    }
+        te_aoc = aoc;
+        aoc.openInventory(player);
+        int i, j;
 
-    //Output
-    for(i = 0; i < 2; ++i)
-    {
-      for(j = 0; j < 3; ++j)
-      {
-        addSlotToContainer(new SlotAutomaticOreConverter(aoc,8 + j + i * 3, 116 + j * 18, 25 + i * 18));
-      }
-    }
-
-    //Player Inventory
-    for(i = 0; i < 3; ++i)
-    {
-      for(j = 0; j < 9; ++j)
-      {
-        addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, 8 + j * 18, 128 + i * 18));
-      }
-    }
-    for(i = 0; i < 9; ++i)
-    {
-      addSlotToContainer(new Slot(player.inventory, i, 8 + i * 18, 186));
-    }
-  }
-
-  @Override
-  public boolean canInteractWith(EntityPlayer par1EntityPlayer)
-  {
-    return te_aoc.isUsableByPlayer(par1EntityPlayer);
-  }
-
-  public ItemStack transferStackInSlot(EntityPlayer player, int slot_index)
-  {
-    ItemStack slot_stack = ItemStack.EMPTY;
-    Slot slot = (Slot) inventorySlots.get(slot_index);
-
-    if (slot != null && slot.getHasStack())
-    {
-      ItemStack stack = slot.getStack();
-      slot_stack = stack.copy();
-
-      if (slot_index >= SLOTS_OUTPUT && slot_index < SLOTS_OUTPUT + 6)
-      {
-        if (!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_HOTBAR + 9, true))
+        //Input
+        for (i = 0; i < 2; ++i)
         {
-          return ItemStack.EMPTY;
+            for (j = 0; j < 4; ++j)
+            {
+                addSlotToContainer(new Slot(aoc, j + i * 4, 8 + j * 18, 25 + i * 18));
+            }
         }
 
-        slot.onSlotChange(stack, slot_stack);
-      } else if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
-      {
-        if (!mergeItemStack(stack, SLOTS_INPUT, SLOTS_INPUT + 9, false))
+        //Output
+        for (i = 0; i < 2; ++i)
         {
-          return ItemStack.EMPTY;
+            for (j = 0; j < 3; ++j)
+            {
+                addSlotToContainer(new SlotAutomaticOreConverter(aoc, 8 + j + i * 3, 116 + j * 18, 25 + i * 18));
+            }
         }
-      } else if (slot_index >= SLOTS_HOTBAR && slot_index < SLOTS_HOTBAR + 9)
-      {
-        if (!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_INVENTORY + 3 * 9, false))
+
+        //Player Inventory
+        for (i = 0; i < 3; ++i)
         {
-          return ItemStack.EMPTY;
+            for (j = 0; j < 9; ++j)
+            {
+                addSlotToContainer(new Slot(player.inventory, j + i * 9 + 9, 8 + j * 18, 128 + i * 18));
+            }
         }
-      } else if (!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_HOTBAR + 9, false))
-      {
-        return ItemStack.EMPTY;
-      }
-
-      if (!stack.isEmpty())
-      {
-        slot.onSlotChanged();
-      }
-
-      if (stack.getCount() == slot_stack.getCount())
-      {
-        return ItemStack.EMPTY;
-      }
-
-      slot.onTake(player, stack);
+        for (i = 0; i < 9; ++i)
+        {
+            addSlotToContainer(new Slot(player.inventory, i, 8 + i * 18, 186));
+        }
     }
 
-    return slot_stack;
-  }
+    @Override
+    public boolean canInteractWith(EntityPlayer par1EntityPlayer)
+    {
+        return te_aoc.isUsableByPlayer(par1EntityPlayer);
+    }
 
-  @Override
-  public void onContainerClosed(EntityPlayer par1EntityPlayer)
-  {
-    super.onContainerClosed(par1EntityPlayer);
-    this.te_aoc.closeInventory(par1EntityPlayer);
-  }
+    public ItemStack transferStackInSlot(EntityPlayer player, int slot_index)
+    {
+        ItemStack slot_stack = ItemStack.EMPTY;
+        Slot slot = inventorySlots.get(slot_index);
+
+        if (slot != null && slot.getHasStack())
+        {
+            ItemStack stack = slot.getStack();
+            slot_stack = stack.copy();
+
+            if (slot_index >= SLOTS_OUTPUT && slot_index < SLOTS_OUTPUT + 6)
+            {
+                if (!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_HOTBAR + 9, true))
+                {
+                    return ItemStack.EMPTY;
+                }
+
+                slot.onSlotChange(stack, slot_stack);
+            } else if (slot_index >= SLOTS_INVENTORY && slot_index < SLOTS_HOTBAR)
+            {
+                if (!mergeItemStack(stack, SLOTS_INPUT, SLOTS_INPUT + 9, false))
+                {
+                    return ItemStack.EMPTY;
+                }
+            } else if (slot_index >= SLOTS_HOTBAR && slot_index < SLOTS_HOTBAR + 9)
+            {
+                if (!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_INVENTORY + 3 * 9, false))
+                {
+                    return ItemStack.EMPTY;
+                }
+            } else if (!mergeItemStack(stack, SLOTS_INVENTORY, SLOTS_HOTBAR + 9, false))
+            {
+                return ItemStack.EMPTY;
+            }
+
+            if (!stack.isEmpty())
+            {
+                slot.onSlotChanged();
+            }
+
+            if (stack.getCount() == slot_stack.getCount())
+            {
+                return ItemStack.EMPTY;
+            }
+
+            slot.onTake(player, stack);
+        }
+
+        return slot_stack;
+    }
+
+    @Override
+    public void onContainerClosed(EntityPlayer par1EntityPlayer)
+    {
+        super.onContainerClosed(par1EntityPlayer);
+        this.te_aoc.closeInventory(par1EntityPlayer);
+    }
 }

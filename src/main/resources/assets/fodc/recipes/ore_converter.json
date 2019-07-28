@@ -1,0 +1,34 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        " i ",
+        "dcd",
+        " b "
+    ],
+    "key":
+    {
+        "i":
+        {
+            "type": "forge:ore_dict",
+            "ore": "ingotIron"
+        },
+        "c":
+        {
+            "item": "minecraft:cobblestone"
+        },
+        "b":
+        {
+            "item": "minecraft:crafting_table"
+        },
+        "d":
+        {
+            "item": "minecraft:redstone"
+        }
+    },
+    "result":
+    {
+        "item": "fodc:ore_converter",
+        "count": 1
+    }
+}

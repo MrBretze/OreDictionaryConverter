@@ -1,7 +1,5 @@
 package exter.fodc.block;
 
-import java.util.Random;
-
 import exter.fodc.ModOreDicConvert;
 import exter.fodc.proxy.CommonODCProxy;
 import exter.fodc.tileentity.TileEntityAutomaticOreConverter;
@@ -20,70 +18,70 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 
+import java.util.Random;
+
 
 public class BlockAutomaticOreConverter extends BlockContainer
 {
-  private Random rand = new Random();
-  
-  public BlockAutomaticOreConverter()
-  {
-    super(Material.ROCK);
-    setResistance(8.0F);
-    setHardness(2.5F);
-    setSoundType(SoundType.STONE);
-    setUnlocalizedName("fodc.ore_autoconverter");
-    setCreativeTab(CreativeTabs.DECORATIONS);
-    setRegistryName("ore_autoconverter");
-  }
+    private Random rand = new Random();
 
-  public EnumBlockRenderType getRenderType(IBlockState state)
-  {
-    return EnumBlockRenderType.MODEL;
-  }
-
-  @Override
-  public void breakBlock(World world, BlockPos pos, IBlockState state)
-  {
-    TileEntityAutomaticOreConverter te_aoc = (TileEntityAutomaticOreConverter)world.getTileEntity(pos);
-
-    if(te_aoc != null && !world.isRemote)
+    public BlockAutomaticOreConverter()
     {
-      int i;
-      for(i = 0; i < te_aoc.getSizeInventory(); ++i)
-      {
-        ItemStack is = te_aoc.getStackInSlot(i);
+        super(Material.ROCK);
+        setResistance(8.0F);
+        setHardness(2.5F);
+        setSoundType(SoundType.STONE);
+        setCreativeTab(CreativeTabs.DECORATIONS);
+    }
 
-        if(is != null && is.getCount() > 0)
+    public EnumBlockRenderType getRenderType(IBlockState state)
+    {
+        return EnumBlockRenderType.MODEL;
+    }
+
+    @Override
+    public void breakBlock(World world, BlockPos pos, IBlockState state)
+    {
+        TileEntityAutomaticOreConverter te_aoc = (TileEntityAutomaticOreConverter) world.getTileEntity(pos);
+
+        if (te_aoc != null && !world.isRemote)
         {
-          double drop_x = (rand.nextFloat() * 0.3) + 0.35;
-          double drop_y = (rand.nextFloat() * 0.3) + 0.35;
-          double drop_z = (rand.nextFloat() * 0.3) + 0.35;
-          EntityItem entityitem = new EntityItem(world, pos.getX() + drop_x, pos.getY() + drop_y, pos.getZ() + drop_z, is);
-          entityitem.lifespan = 10;
+            int i;
+            for (i = 0; i < te_aoc.getSizeInventory(); ++i)
+            {
+                ItemStack is = te_aoc.getStackInSlot(i);
 
-          world.spawnEntity(entityitem);
+                if (is != null && is.getCount() > 0)
+                {
+                    double drop_x = (rand.nextFloat() * 0.3) + 0.35;
+                    double drop_y = (rand.nextFloat() * 0.3) + 0.35;
+                    double drop_z = (rand.nextFloat() * 0.3) + 0.35;
+                    EntityItem entityitem = new EntityItem(world, pos.getX() + drop_x, pos.getY() + drop_y, pos.getZ() + drop_z, is);
+                    entityitem.lifespan = 10;
+
+                    world.spawnEntity(entityitem);
+                }
+            }
         }
-      }
+        super.breakBlock(world, pos, state);
     }
-    super.breakBlock(world, pos, state);
-  }
 
-  @Override
-  public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
-  {
-    if (world.isRemote)
+    @Override
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing side, float hitX, float hitY, float hitZ)
     {
-      return true;
-    } else
-    {
-      player.openGui(ModOreDicConvert.instance, CommonODCProxy.GUI_OREAUTOCONVERTER, world, pos.getX(),pos.getY(),pos.getZ());
-      return true;
+        if (world.isRemote)
+        {
+            return true;
+        } else
+        {
+            player.openGui(ModOreDicConvert.instance, CommonODCProxy.GUI_OREAUTOCONVERTER, world, pos.getX(), pos.getY(), pos.getZ());
+            return true;
+        }
     }
-  }
 
-  @Override
-  public TileEntity createNewTileEntity(World var1, int var2)
-  {
-    return new TileEntityAutomaticOreConverter();
-  }
+    @Override
+    public TileEntity createNewTileEntity(World var1, int var2)
+    {
+        return new TileEntityAutomaticOreConverter();
+    }
 }

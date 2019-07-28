@@ -1,0 +1,38 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "drd",
+        " t ",
+        "pcp"
+    ],
+    "key":
+    {
+        "p":
+        {
+            "item": "minecraft:stone",
+            "data": 6
+        },
+        "t":
+        {
+            "item": "fodc:ore_conv_table"
+        },
+        "r":
+        {
+            "item": "minecraft:redstone"
+        },
+        "d":
+        {
+            "item": "minecraft:dispenser"
+        },
+        "c":
+        {
+            "item": "minecraft:chest"
+        }
+    },
+    "result":
+    {
+        "item": "fodc:ore_autoconverter",
+        "count": 1
+    }
+}

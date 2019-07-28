@@ -1,0 +1,33 @@
+{
+    "type": "minecraft:crafting_shaped",
+    "pattern":
+    [
+        "dcd",
+        "pbp",
+        "dcd"
+    ],
+    "key":
+    {
+        "p":
+        {
+            "item": "minecraft:piston"
+        },
+        "c":
+        {
+            "item": "fodc:ore_converter"
+        },
+        "b":
+        {
+            "item": "minecraft:crafting_table"
+        },
+        "d":
+        {
+            "item": "minecraft:redstone"
+        }
+    },
+    "result":
+    {
+        "item": "fodc:ore_conv_table",
+        "count": 1
+    }
+}
