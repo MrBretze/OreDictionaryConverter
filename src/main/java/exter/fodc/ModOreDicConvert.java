@@ -85,7 +85,7 @@ public class ModOreDicConvert
                 log.warn("null name in Ore Dictionary.");
                 continue;
             }
-            
+
             OreNameRegistry.registerOreName(name);
         }
         MinecraftForge.EVENT_BUS.register(this);
